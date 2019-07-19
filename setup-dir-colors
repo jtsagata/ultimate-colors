@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+SCHEME=$1
+
+repo="seebi/dircolors-solarized"
+branch="master"
+url_base="https://raw.githubusercontent.com/${repo}/${branch}/"
+
+case $SCHEME in
+	Dark)
+		fetch="dircolors.ansi-dark" 
+		;;
+	Light)
+		fetch="dircolors.ansi-light" 
+		;;
+	*) 
+		;;
+esac
+
+if [[ ! "$fetch" == "" ]]; then
+	echo "Setup dircolors to $SCHEME mode."
+	curl -Ls "$url_base/$fetch" -o ${HOME}/.config/dotfiles/dircolors
+	source "${HOME}/.config/dotfiles/shell/profile.d/01.dircolors.sh"
+fi
+
+#
+# Demo
+#
+if [ ! -d "/tmp/dircolors-solarized-demo" ] ; then 
+	mkdir -p /tmp/dircolors-solarized-demo
+	fname='/tmp/dircolors-solarized-demo/test-directory.tar.bz2'
+	curl -Ls "$url_base/test-directory.tar.bz2" -o $fname
+	sudo tar xfj $fname -C /tmp/dircolors-solarized-demo
+fi
+
+command ls --color /tmp/dircolors-solarized-demo/test-directory

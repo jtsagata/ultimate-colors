@@ -1,0 +1,52 @@
+#!/usr/bin/env bash
+
+# With ideas from: 
+# https://github.com/aruhier/gnome-terminal-colors-solarized
+
+dir=$(dirname "$0")
+SCHEME=$1
+
+to_dconf() {
+    tr '\n' '~' | sed -e "s#~\$#']\n#" -e "s#~#', '#g" -e "s#^#['#"
+}
+
+scheme_dir=$dir/gnome-colors/$SCHEME
+if [ ! -d "${scheme_dir}" ] ; then
+	echo "Invalid profile. Choose Light or Dark"
+	exit;
+fi
+
+
+profile=$(gsettings get org.gnome.Terminal.ProfilesList default)
+profile_id=${profile:1:-1} 
+profile_name=$(gsettings get "org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:$profile_id/" visible-name)
+
+dconfdir=/org/gnome/terminal/legacy/profiles:
+profile_path="$dconfdir/:$profile_id"
+
+
+# set color palette
+dconf write $profile_path/palette "$(to_dconf < $scheme_dir/palette)"
+
+# set foreground, background and highlight color
+dconf write $profile_path/bold-color       "'$(cat $scheme_dir/bd_color)'"
+dconf write $profile_path/background-color "'$(cat $scheme_dir/bg_color)'"
+dconf write $profile_path/foreground-color "'$(cat $scheme_dir/fg_color)'"
+
+# make sure the profile is set to not use theme colors
+dconf write $profile_path/use-theme-colors "false"
+
+# set highlighted color to be different from foreground color
+dconf write $profile_path/bold-color-same-as-fg "false"
+
+#apt install colortest
+if [ -x "$(command -v colortest-8)" ] ; then
+	colortest-8
+fi
+
+exit
+echo  "Please note that there is no uninstall option yet. If you do not "
+echo  "wish to overwrite any of your profiles, you should create a new "
+echo  "profile before you run this script. However, you can reset your "
+echo  "colors to the Gnome default, by running:"
+echo "    dconf reset -f /org/gnome/terminal/legacy/profiles:/"
