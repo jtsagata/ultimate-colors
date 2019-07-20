@@ -23,19 +23,11 @@ if [ ! -d "${scheme_dir}" ] ; then
 	exit;
 fi
 
+
 # copy dotfiles
 mkdir -p ${HOME}/.config/dotfiles/
 cp -r ./shell ${HOME}/.config/dotfiles/
 
-
-cp $scheme_dir/Xresources ${HOME}/.config/dotfiles/Xresources
-ln -sf ${HOME}/.config/dotfiles/Xresources ~/.Xresources
-xrdb -merge ~/.Xresources
-
-# MC
-cp $scheme_dir/mc.ini ${HOME}/.config/dotfiles/mc.ini
-
-
-$dir/setup-gnome-terminal $menuitem
-$dir/setup-dir-colors     $menuitem
-
+$dir/support/setup-x-terminals    $menuitem
+$dir/support/setup-dir-colors     $menuitem
+$dir/support/setup-misc-colors    $menuitem
