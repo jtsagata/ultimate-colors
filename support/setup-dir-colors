@@ -21,9 +21,11 @@ eval `dircolors ${dircolors_file}`
 #
 # Demo
 #
-if [ ! -d "/tmp/dircolors-solarized-demo" ] ; then 
-	mkdir -p /tmp/dircolors-solarized-demo
-	sudo tar xfj $dir/support/test-directory.tar.bz2 -C /tmp/dircolors-solarized-demo
-fi
+if [[ "$show_sample" == "ON" ]]; then
+	if [ ! -d "/tmp/dircolors-solarized-demo" ] ; then 
+		mkdir -p /tmp/dircolors-solarized-demo
+		sudo tar xfj $dir/support/test-directory.tar.bz2 -C /tmp/dircolors-solarized-demo
+	fi
 
-command ls --color /tmp/dircolors-solarized-demo/test-directory
+	command ls --color /tmp/dircolors-solarized-demo/test-directory
+fi

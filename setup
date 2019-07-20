@@ -31,3 +31,5 @@ cp -r ./shell ${HOME}/.config/dotfiles/
 $dir/support/setup-x-terminals    $menuitem
 $dir/support/setup-dir-colors     $menuitem
 $dir/support/setup-misc-colors    $menuitem
+
+./support/colorbar
