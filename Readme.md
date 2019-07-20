@@ -1,11 +1,10 @@
 ## TODO
 * Better colors for mc
 * vim
-* terminology
+* terminology (is it easy possible ?)
 * tmux
 * konsole
-* allacrity
-* st
+* st (needs recompile, don't bother?)
 * Dont setup uninstalled terminals
 
 ## Kong term plans

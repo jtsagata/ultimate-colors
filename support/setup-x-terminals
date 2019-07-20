@@ -41,7 +41,7 @@ function setup_gnome_terminal() {
 	# set highlighted color to be different from foreground color
 	dconf write $profile_path/bold-color-same-as-fg "false"
 
-	
+
 	# Transparency
 	dconf write $profile_path/use-theme-transpareny  "false"
 	dconf write $profile_path/background-transparency-percent "5"
@@ -82,15 +82,24 @@ function setup_tilix_terminal() {
 }
 
 
+function setup_quake_terminal() {
+	# Guake
+	guake_str=$(cat $scheme_dir/guake)
+	dconf write "/apps/guake/style/font/palette" "'$guake_str'"
+	dconf write "/apps/guake/style/font/palette-name" "'Solarized: $SCHEME'"
+}
+
+
+function setup_alacritty_terminal(){
+	mkdir -p ~/.config/alacritty/
+	cp $scheme_dir/alacritty.yml ${HOME}/.config/alacritty/alacritty-$SCHEME.yml
+	ln -sf ${HOME}/.config/alacritty/alacritty-$SCHEME.yml ${HOME}/.config/alacritty/alacritty.yml
+}
 
 setup_gnome_terminal
 setup_tilix_terminal
-
-
-# Guake
-guake_str=$(cat $scheme_dir/guake)
-dconf write "/apps/guake/style/font/palette" "'$guake_str'"
-dconf write "/apps/guake/style/font/palette-name" "'Solarized: $SCHEME'"
+setup_quake_terminal
+setup_alacritty_terminal
 
 
 #apt install colortest
