@@ -1,0 +1,14 @@
+#!/bin/bash
+
+for i in 0 1 2 3 4 5 6 7
+do
+   echo -n `tput sgr0; tput setab $i`"   "
+done
+echo -n `tput sgr0` " "
+
+# for i in 0 1 2 3 4 5 6 7
+# do
+#    echo -n `tput sgr0; tput setab $i;  tput setaf 7; tput rev` "X"
+# done
+# echo -n `tput sgr0` " "
+echo
