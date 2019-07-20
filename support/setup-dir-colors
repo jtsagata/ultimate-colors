@@ -3,10 +3,10 @@
 # With ideas from: 
 # https://github.com/seebi/dircolors-solarized
 
-dir=$(dirname "$0")
 SCHEME=$1
-
+dir=$(dirname "$0")
 scheme_dir=$dir/../gnome-colors/$SCHEME
+
 if [ ! -d "${scheme_dir}" ] ; then
 	echo "Invalid profile. Choose Light or Dark"
 	exit;
